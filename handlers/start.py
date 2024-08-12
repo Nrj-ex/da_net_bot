@@ -10,7 +10,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
     storage.add_user(user=user)
 
-    await context.bot.send_message(chat_id=user.id,
-                                   text=f"Привет, {update.effective_user.name}")
+    await context.bot.send_message(chat_id=user.id, text=f"Привет, {update.effective_user.name}")
 
     await help(update, context)

@@ -3,7 +3,7 @@ from telegram.ext import ContextTypes
 from utils import save_ids_message_for_delete, delete_messages
 from loader import storage
 
-from constants import HELP
+from constants import YESNO
 
 
 async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -14,13 +14,13 @@ async def menu(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     storage.add_user(user=user)
     messages_for_delete = []
 
-    keyboard_user_settings = [
-        [InlineKeyboardButton('help', callback_data=HELP)],
+    keyboard = [
+        [InlineKeyboardButton('yes/no?', callback_data=YESNO)],
     ]
 
     message = await context.bot.send_message(chat_id=user.id,
                                              text='menu text',
-                                             reply_markup=InlineKeyboardMarkup(keyboard_user_settings))
+                                             reply_markup=InlineKeyboardMarkup(keyboard))
     messages_for_delete.append(message)
 
     await save_ids_message_for_delete(context, *messages_for_delete)

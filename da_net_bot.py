@@ -16,8 +16,7 @@ from telegram.ext import (
     Application, CommandHandler, AIORateLimiter, CallbackQueryHandler, MessageHandler, filters, InlineQueryHandler
 )
 
-from handlers import start, help, menu, inline_query, button_options
-
+from handlers import start, help, menu, button_options, yes_or_no
 
 
 def main() -> None:
@@ -27,12 +26,11 @@ def main() -> None:
         AIORateLimiter(overall_max_rate=10, max_retries=3)).build()
 
     application.add_handler(CommandHandler("start", start))
-    application.add_handler(CommandHandler("menu", menu))
     application.add_handler(CommandHandler("help", help))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, yes_or_no))
 
     application.add_handler(CallbackQueryHandler(button_options))
 
-    application.add_handler(InlineQueryHandler(inline_query))
     application.run_polling()
 
 
